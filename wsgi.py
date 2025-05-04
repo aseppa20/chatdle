@@ -1,9 +1,8 @@
 from flask import Flask, render_template
-from flask import request, Response
+from flask import request
 from logging.config import dictConfig
 import json
-import random
-import game as tdle
+import game as chatdle
 import nh3
 
 dictConfig({
@@ -24,7 +23,7 @@ dictConfig({
 
 app = Flask(__name__)
 
-RUNNING_GAME = tdle.game("kaksi")
+RUNNING_GAME = chatdle.game("kaksi")
 
 @app.route("/")
 def hello_world():

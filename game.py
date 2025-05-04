@@ -5,7 +5,7 @@ class game:
     max_guesses: int
     guessed = set()
     state_hash: int
-    # Game state describes all the guesses done, if a correct word has been found and includes a hash
+    # Game state describes all the guesses done, if game runs
     _game_state = {
         "_guesses": 0,
         "_max_guesses": int,
