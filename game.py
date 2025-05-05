@@ -1,4 +1,5 @@
 from copy import deepcopy
+import json
 
 class game:
     correct_answer: str
@@ -7,6 +8,7 @@ class game:
     state_hash: int
     # Game state describes all the guesses done, if game runs
     _game_state = {
+        "_answer_length": int,
         "_guesses": 0,
         "_max_guesses": int,
         "_running": False
@@ -18,6 +20,7 @@ class game:
     def reset(self, correct_answer: str, max_guesses: int = -1):
         self.correct_answer = correct_answer
         self._game_state = {
+            "_answer_length": len(correct_answer),
             "_guesses": 0,
             "_max_guesses": int,
             "_running": False
@@ -95,7 +98,13 @@ class game:
         
     def get_game_state(self) -> dict:
         self._game_state["_guesses"] = len(self.guessed)
-        return self._game_state
+        state = deepcopy(self._game_state)
+        state["_hash"] = self.get_hash()
+        return state
 
     def _hash_state(self) -> None:
-        self.state_hash = hash(self._game_state, self.correct_answer)
+        self.state_hash = hash(json.dumps(self._game_state)) + hash(self.correct_answer)
+
+    def get_hash(self) -> int:
+        self._hash_state()
+        return self.state_hash
