@@ -59,8 +59,8 @@ def new_game():
             data = data.decode()
             nh3.clean_text(data)
             app.logger.debug(data)
-            game_resp = RUNNING_GAME.reset(guess=data)
-            return (game_resp[0], 200)
+            RUNNING_GAME.reset(correct_answer=data)
+            return ("OK! New game!", 200)
         elif request.content_length > 1024:
             app.register_error_handler("Request too long", 413)
         else:

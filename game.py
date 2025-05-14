@@ -1,5 +1,6 @@
 from copy import deepcopy
 import json
+import random
 
 class game:
     correct_answer: str
@@ -11,19 +12,21 @@ class game:
         "_answer_length": int,
         "_guesses": 0,
         "_max_guesses": int,
-        "_running": False
+        "_running": False,
+        "_game_id": int
     }
 
     def __init__(self, correct_answer: str, max_guesses: int = -1) -> None:
         self.reset(correct_answer, max_guesses)
 
     def reset(self, correct_answer: str, max_guesses: int = -1):
-        self.correct_answer = correct_answer
+        self.correct_answer = correct_answer.lower()
         self._game_state = {
             "_answer_length": len(correct_answer),
             "_guesses": 0,
             "_max_guesses": int,
-            "_running": False
+            "_running": False,
+            "_game_id": random.randint(0, 65535)
         }
         self.max_guesses = max_guesses
         self._game_state["_max_guesses"] = max_guesses
@@ -71,7 +74,8 @@ class game:
         
         return answer_dict
     
-    def guess(self, guess) -> tuple:
+    def guess(self, guess: str) -> tuple:
+        guess = guess.lower()
         if not (self.max_guesses == -1 or len(self.guessed) < self.max_guesses):
             self._game_state["_running"] = False
             return ("No guesses left", None)

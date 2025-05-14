@@ -20,9 +20,6 @@ div.letterbox {
     text-align: center;
     margin: 2px;
     font-size: 45px;
-}
-
-div.empty {
     background-color: black;
     border: 4px solid grey;
 }
